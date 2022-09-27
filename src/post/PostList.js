@@ -1,10 +1,11 @@
-import Post from './Post'
+import Post from "./Post";
 
-export default function PostList ({posts = []}) {
-    return (
-        <div>
-            {posts.map((p, i) => <Post {...p} key={'post-' + i} />)}
-        </div>
-    )
+export default function PostList({ posts = [] }) {
+  return (
+    <div>
+      {posts.map((p, i) => (
+        <Post {...p} key={"post-" + i} />
+      ))}
+    </div>
+  );
 }
-

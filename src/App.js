@@ -1,30 +1,26 @@
 import UserBar from "./user/UserBar";
-import PostList from "./post/PostList"
+import PostList from "./post/PostList";
 
 function App() {
-
   const posts = [
     {
       title: "My first post",
       content: "Some content",
-      author: "Paul"
+      author: "Paul",
     },
     {
       title: "My second post",
       content: "Some content",
-      author: "Paul"
-    }
-  ]
+      author: "Paul",
+    },
+  ];
 
-    return (
-      <div>
-        <UserBar />
-        <PostList posts={posts} />
-      </div>
-    )       
+  return (
+    <div>
+      <UserBar />
+      <PostList posts={posts} />
+    </div>
+  );
 }
-
-
-
 
 export default App;
