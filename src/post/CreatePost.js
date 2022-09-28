@@ -1,12 +1,34 @@
-export default function Post({ title, content, author }) {
+import { useState } from "react";
+
+export default function CreatePost({ user, posts, dispatch }) {
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+
   return (
-    <div>
-      <h3>{title}</h3>
-      <div>{content}</div>
-      <br />
-      <i>
-        Written by <b>{author}</b>
-      </i>
-    </div>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        dispatch({ type: "CREATE_POST", title, content, author: user });
+      }}
+    >
+      <div>
+        Author: <b>{user}</b>
+      </div>
+      <div>
+        <label htmlFor="create-title">Title:</label>
+        <input
+          type="text"
+          name="create-title"
+          id="create-title"
+          value={title}
+          onChange={(event) => setTitle(event.target.value)}
+        />
+      </div>
+      <textarea
+        value={content}
+        onChange={(event) => setContent(event.target.value)}
+      />
+      <input type="submit" value="Create" />
+    </form>
   );
 }
