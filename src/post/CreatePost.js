@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 export default function CreatePost({ user, posts, dispatch }) {
   const [title, setTitle] = useState("");
@@ -8,7 +9,13 @@ export default function CreatePost({ user, posts, dispatch }) {
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        dispatch({ type: "CREATE_POST", title, content, author: user });
+        dispatch({
+          type: "CREATE_POST",
+          title,
+          content,
+          author: user,
+          id: uuidv4(),
+        });
       }}
     >
       <div>

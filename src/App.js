@@ -1,4 +1,5 @@
 import { useState, useReducer } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 import UserBar from "./user/UserBar";
 import PostList from "./post/PostList";
@@ -12,11 +13,13 @@ function App() {
       title: "My first post",
       content: "Some content",
       author: "Paul",
+      id: uuidv4(),
     },
     {
       title: "My second post",
       content: "Some content",
       author: "Paul",
+      id: uuidv4(),
     },
   ];
 
