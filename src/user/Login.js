@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { StateContext } from "../contexts";
 
-export default function Login({ dispatch }) {
+export default function Login() {
   const [username, setUsername] = useState("");
+  const { dispatch } = useContext(StateContext);
 
   //   function handleUsername(evt) {
   //     setUsername(evt.target.value);
