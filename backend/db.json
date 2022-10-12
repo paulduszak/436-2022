@@ -1,0 +1,43 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "portal",
+      "content": "Some content",
+      "author": "paul"
+    },
+    {
+      "title": "Some old post",
+      "content": "Some new content",
+      "author": "paul",
+      "id": 3
+    },
+    {
+      "title": "A new post",
+      "content": "Some new content",
+      "author": "paul",
+      "id": 4
+    }
+  ],
+  "users": [
+    {
+      "email": "paul@test.com",
+      "password": "$2a$10$49J8XSE7YnrysHiWMUFMqui8ZvDv9CV2VLXU/3Xn6/CSLPGHTVCp.",
+      "id": 1
+    }
+  ],
+  "themes": [
+    {
+      "id": 1,
+      "primaryColor": "deepskyblue",
+      "secondaryColor": "coral"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "content": "Some content",
+      "author": "paul"
+    }
+  ]
+}

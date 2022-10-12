@@ -1,4 +1,5 @@
 import { useState, useEffect, useReducer } from "react";
+import { useResource } from "react-request-hook";
 import { v4 as uuidv4 } from "uuid";
 
 import UserBar from "./user/UserBar";
@@ -46,6 +47,31 @@ function App() {
     primaryColor: "deepskyblue",
     secondaryColor: "coral",
   });
+
+  // useEffect(() => {
+  //   fetch("/api/themes")
+  //     .then((result) => result.json())
+  //     .then((themes) => setTheme(themes));
+  // }, []);
+
+  // useEffect(() => {
+  //   fetch("/api/posts")
+  //     .then((result) => result.json())
+  //     .then((posts) => dispatch({ type: "FETCH_POSTS", posts }));
+  // }, []);
+
+  const [posts, getPosts] = useResource(() => ({
+    url: "/posts",
+    method: "get",
+  }));
+
+  useEffect(getPosts, []);
+
+  useEffect(() => {
+    if (posts && posts.data) {
+      dispatch({ type: "FETCH_POSTS", posts: posts.data });
+    }
+  }, [posts]);
 
   return (
     <div>
