@@ -1,19 +1,36 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { useResource } from "react-request-hook";
 
 import { StateContext } from "../contexts";
 
 export default function CreatePost() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [error, setError] = useState(false);
 
   const { state, dispatch } = useContext(StateContext);
   const { user } = state;
+
+  const [post, createPost] = useResource(({ title, content, author }) => ({
+    url: "/posts",
+    method: "post",
+    data: { title, content, author },
+  }));
+
+  // ensure the newly created post didn't return an error, handle if it did
+  // useEffect(() => {
+  //   if (post?.data?.error) {
+  //     setError(true)
+  //     //alert(post.data.error.code);
+  //   }
+  // }, [post]);
 
   return (
     <form
       onSubmit={(e) => {
         e.preventDefault();
+        createPost({ title, content, author: user });
         dispatch({
           type: "CREATE_POST",
           title,

@@ -1,4 +1,4 @@
-import { useState, useEffect, useReducer } from "react";
+import React, { useState, useEffect, useReducer } from "react";
 import { useResource } from "react-request-hook";
 import { v4 as uuidv4 } from "uuid";
 
@@ -13,20 +13,7 @@ import appReducer from "./reducers";
 import { ThemeContext, StateContext } from "./contexts";
 
 function App() {
-  const initialPosts = [
-    {
-      title: "My first post",
-      content: "Some content",
-      author: "Paul",
-      id: uuidv4(),
-    },
-    {
-      title: "My second post",
-      content: "Some content",
-      author: "Paul",
-      id: uuidv4(),
-    },
-  ];
+  const initialPosts = [];
 
   const [state, dispatch] = useReducer(appReducer, {
     user: "",
@@ -69,7 +56,7 @@ function App() {
 
   useEffect(() => {
     if (posts && posts.data) {
-      dispatch({ type: "FETCH_POSTS", posts: posts.data });
+      dispatch({ type: "FETCH_POSTS", posts: posts.data.reverse() });
     }
   }, [posts]);
 
@@ -79,8 +66,9 @@ function App() {
         <ThemeContext.Provider value={theme}>
           <Header title="Blog" />
           <ChangeTheme theme={theme} setTheme={setTheme} />
-
-          <UserBar />
+          <React.Suspense fallback={"Loading..."}>
+            <UserBar />
+          </React.Suspense>
           <PostList />
           {state.user && <CreatePost />}
         </ThemeContext.Provider>

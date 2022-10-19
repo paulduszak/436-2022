@@ -1,12 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useResource } from "react-request-hook";
 import ThemeItem from "./ThemeItem";
 
-const THEMES = [
-  { primaryColor: "deepskyblue", secondaryColor: "coral" },
-  { primaryColor: "orchid", secondaryColor: "mediumseagreen" },
-];
-
 export default function ChangeTheme({ theme, setTheme }) {
+  const [themes, getThemes] = useResource(() => ({
+    url: "/themes",
+    method: "get",
+  }));
+
+  useEffect(getThemes, []);
+
+  const { data, isLoading } = themes;
+
   function isActive(t) {
     return (
       t.primaryColor === theme.primaryColor &&
@@ -15,15 +20,17 @@ export default function ChangeTheme({ theme, setTheme }) {
   }
   return (
     <div>
+      {isLoading && " Loading themes..."}
       Change theme:
-      {THEMES.map((t, i) => (
-        <ThemeItem
-          key={"theme-" + i}
-          theme={t}
-          active={isActive(t)}
-          onClick={() => setTheme(t)}
-        />
-      ))}{" "}
+      {data &&
+        data.map((t, i) => (
+          <ThemeItem
+            key={"theme-" + i}
+            theme={t}
+            active={isActive(t)}
+            onClick={() => setTheme(t)}
+          />
+        ))}{" "}
     </div>
   );
 }
