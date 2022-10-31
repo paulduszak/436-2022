@@ -2,14 +2,10 @@ var express = require("express");
 
 var app = express();
 
+require("./setupMongo")();
+
 app.get(
   "/users/:userId",
-
-  /// logging middleware - logs the request
-  function (req, res, next) {
-    console.log("Request URL:", req.originalUrl);
-    //next();
-  },
 
   /// authentication middleware - checks if the user is authenticated
   //   function (req, res, next) {
@@ -23,6 +19,12 @@ app.get(
 
   function (req, res) {
     res.send(req.params.userId);
+  },
+
+  /// logging middleware - logs the request
+  function (req, res, next) {
+    console.log("Request URL:", req.originalUrl);
+    next();
   }
 );
 

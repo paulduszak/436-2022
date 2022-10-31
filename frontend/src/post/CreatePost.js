@@ -19,25 +19,27 @@ export default function CreatePost() {
   }));
 
   // ensure the newly created post didn't return an error, handle if it did
-  // useEffect(() => {
-  //   if (post?.data?.error) {
-  //     setError(true)
-  //     //alert(post.data.error.code);
-  //   }
-  // }, [post]);
+  useEffect(() => {
+    if (post?.error) {
+      setError(true);
+      //alert("Something went wrong creating post.");
+    }
+    if (post?.isLoading === false && post?.data) {
+      dispatch({
+        type: "CREATE_POST",
+        title: post.data.title,
+        content: post.data.content,
+        author: post.data.author,
+        id: post.data.id,
+      });
+    }
+  }, [post]);
 
   return (
     <form
       onSubmit={(e) => {
         e.preventDefault();
         createPost({ title, content, author: user });
-        dispatch({
-          type: "CREATE_POST",
-          title,
-          content,
-          author: user,
-          id: uuidv4(),
-        });
       }}
     >
       <div>
