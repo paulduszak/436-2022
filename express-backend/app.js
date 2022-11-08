@@ -4,28 +4,15 @@ var app = express();
 
 require("./setupMongo")();
 
-app.get(
-  "/users/:userId",
+app.use(express.json());
 
-  /// authentication middleware - checks if the user is authenticated
-  //   function (req, res, next) {
+// middleware function here to append a trace header to a request
+// app.use(function (req, res, next) {
+//   req.traceId = uuidv4();
+//   next();
+// });
 
-  //     //check req.headers.authorization
-  //     //if not authenticated, return 401
-  //     res.sendStatus(401);
-
-  //     next();
-  //   },
-
-  function (req, res) {
-    res.send(req.params.userId);
-  },
-
-  /// logging middleware - logs the request
-  function (req, res, next) {
-    console.log("Request URL:", req.originalUrl);
-    next();
-  }
-);
+app.use("/auth", require("./routes/auth"));
+app.use("/post", require("./routes/post"));
 
 module.exports = app;
