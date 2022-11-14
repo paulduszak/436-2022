@@ -13,24 +13,22 @@ export default function CreatePost() {
   const { user } = state;
 
   const [post, createPost] = useResource(({ title, content, author }) => ({
-    url: "/posts",
+    url: "/post",
     method: "post",
-    data: { title, content, author },
+    headers: { Authorization: `${state.user.access_token}` },
+    data: { title, content },
   }));
 
   // ensure the newly created post didn't return an error, handle if it did
+
   useEffect(() => {
-    if (post?.error) {
-      setError(true);
-      //alert("Something went wrong creating post.");
-    }
-    if (post?.isLoading === false && post?.data) {
+    if (post.isLoading === false && post.data) {
       dispatch({
         type: "CREATE_POST",
         title: post.data.title,
         content: post.data.content,
-        author: post.data.author,
         id: post.data.id,
+        author: user.username,
       });
     }
   }, [post]);
@@ -43,7 +41,7 @@ export default function CreatePost() {
       }}
     >
       <div>
-        Author: <b>{user}</b>
+        Author: <b>{user.username}</b>
       </div>
       <div>
         <label htmlFor="create-title">Title:</label>

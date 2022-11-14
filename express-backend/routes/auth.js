@@ -33,7 +33,9 @@ router.post("/login", async function (req, res, next) {
             const token = jwt.sign({ id: user._id }, privateKey, {
               algorithm: "RS256",
             });
-            return res.status(200).json({ access_token: token });
+            return res
+              .status(200)
+              .json({ username: user.username, access_token: token });
           } else {
             return res.status(401).json({ error: "Invalid credentials." });
           }
@@ -58,9 +60,13 @@ router.post("/register", async function (req, res, next) {
       return user
         .save()
         .then((savedUser) => {
+          const token = jwt.sign({ id: user._id }, privateKey, {
+            algorithm: "RS256",
+          });
           return res.status(201).json({
             id: savedUser._id,
             username: savedUser.username,
+            access_token: token,
           });
         })
         .catch((error) => {

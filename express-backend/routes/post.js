@@ -32,7 +32,7 @@ router.post("/", async function (req, res) {
     .save()
     .then((savedPost) => {
       return res.status(201).json({
-        id: savedPost._id,
+        _id: savedPost._id,
         title: savedPost.title,
         content: savedPost.content,
         author: savedPost.author,
@@ -45,7 +45,14 @@ router.post("/", async function (req, res) {
 
 router.get("/", async function (req, res, next) {
   const posts = await Post.find().where("author").equals(req.payload.id).exec();
+  //const posts = await Post.find().exec();
   return res.status(200).json({ posts: posts });
+});
+
+router.get("/:id", async function (req, res, next) {
+  const post = await Post.findOne().where("_id").equals(req.params.id).exec();
+  //const posts = await Post.find().exec();
+  return res.status(200).json(post);
 });
 
 module.exports = router;
